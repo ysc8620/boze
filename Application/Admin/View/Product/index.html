@@ -43,7 +43,7 @@
                                         <td><if condition="$item.is_where eq 1"><font color="green">在库房</font> <else/><font color="red">在客户</font> </if></td>
                                         <td><if condition="$item.status eq 1"><font color="green">正常</font> <elseif condition="$item.status eq 2"/><font color="red">维修中</font><else/><font color="black">报废</font> </if></td>
                                         <td class="center">
-                                            <a href="{:U('record/detail', ['proid' => $item['id']])}"><i class="fa fa-check text-navy"></i>收发记录</a>
+                                            <a href="{:U('record/detail', ['product' => $item['id']])}"><i class="fa fa-check text-navy"></i>收发记录</a>
                                             <a href="{:U('product/edit', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>编辑</a>
                                             <a href="{:U('product/del', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>删除</a>
                                         </td>

@@ -41,7 +41,7 @@
                                         <td>{$item.remark}</td>
                                         <td><if condition="$item.status eq 1"><font color="green">正常</font> <elseif condition="$item.status eq 2"/><font color="red">维修中</font><else/><font color="black">报废</font> </if></td>
                                         <td class="center">
-                                            <a href="{:U('record/detail', ['cliid' => $item['id']])}"><i class="fa fa-check text-navy"></i>收发记录</a>
+                                            <a href="{:U('record/index', ['client' => $item['id']])}"><i class="fa fa-check text-navy"></i>收发记录</a>
                                             <a href="{:U('product/client_edit', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>编辑</a>
                                             <a href="{:U('product/client_del', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>删除</a>
                                         </td>
