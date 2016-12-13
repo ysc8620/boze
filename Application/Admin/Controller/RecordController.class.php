@@ -14,7 +14,7 @@ class RecordController extends BaseController
     {
         $type = I('type', 0, 'intval');
         $batch = I('batch',0,'intval');
-        $client = I('client',0,'intval');
+        $client = I('client','','trim');
         $product = I('product','','trim');
         $car = I('car','','trim');
         $date = I('date','','trim');
@@ -42,7 +42,7 @@ class RecordController extends BaseController
 
         // 客户
         if($client){
-            $where['client_id'] = $client;
+            $where['client_name'] = $client;
         }
 
         if($car){

@@ -113,7 +113,7 @@
     $(document).ready(function () {
         $('button[type="submit"]').click(function(){
             var batch = $('input[name="batch"]').val();
-            var client = $('input[name="client"]').val();
+            var client = encodeURI($.trim($('input[name="client"]').val()));
             var type = $('select[name="type"]').val();
             var product = $('input[name="product"]').val();
             var car = $('input[name="car"]').val();
@@ -124,7 +124,7 @@
 
         $('.export').click(function(){
             var batch = $('input[name="batch"]').val();
-            var client = $('input[name="client"]').val();
+            var client = encodeURI($.trim($('input[name="client"]').val()));
             var type = $('select[name="type"]').val();
             var product = $('input[name="product"]').val();
             var car = $('input[name="car"]').val();
