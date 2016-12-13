@@ -22,8 +22,8 @@ class RecordController extends BaseController
 
         $this->assign('car', $car);
         $this->assign('type', $type);
-        $this->assign('batch_id', $batch);
-        $this->assign('client', $client);
+        $this->assign('batch_id', $batch?$batch:'');
+        $this->assign('client', $client?$client:'');
         $this->assign('product', $product);
         $this->assign('date', $date);
 
