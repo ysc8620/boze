@@ -21,66 +21,22 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>在工厂内</h5>
+                    <h5>【{$cate_name}】铁箱明细</h5>
                     <div class="ibox-content">
+                        <div class=""> <a href="{:U('product/search')}" target="_self" class="btn btn-primary ">返回</a>  </div>
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="editable">
                                 <thead>
                                 <tr>
-                                    <th>铁箱属性</th>
-                                    <th>铁箱即时库存</th>
                                     <th>铁箱明细</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <volist name="product_list_1" id="item">
-                                    <tr class="gradeX">
-                                        <td>{$item.cate_name}</td>
-                                        <td>{$item.total}</td>
-                                        <td class="center">
-                                            <a href="{:U('product/search_detail',['cate_name'=>$item['cate_name']])}"><i class="fa fa-check text-navy"></i>查看明细</a>
-                                        </td>
-                                    </tr>
-                                </volist>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row ">
-                            <div class="pages">{$page}</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="ibox float-e-margins">
-                <div class="ibox-title">
-                    <h5>在工厂外</h5>
-                    <div class="ibox-content">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover" id="editable1">
-                                <thead>
-                                <tr>
-                                    <th>铁箱属性</th>
-                                    <th>铁箱即时库存</th>
-                                    <th>客户代码</th>
-                                    <th>铁箱明细</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <volist name="product_list_2" id="item">
                                     <tr class="gradeX">
-                                        <td>{$item.cate_name}</td>
-                                        <td>{$item.total}</td>
-                                        <td>{$item.client_name}</td>
-                                        <td class="center">
-                                            {$item.total_name}
-                                        </td>
+                                        <td><volist name="product_list" id="item">{$item.name}, &nbsp;</volist></td>
                                     </tr>
-                                </volist>
+
                                 </tbody>
                             </table>
                         </div>

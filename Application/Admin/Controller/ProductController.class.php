@@ -116,6 +116,9 @@ class ProductController extends BaseController
                         continue;
                     }
                     $item = explode(",",$data);
+                    foreach($item as $i=>$row){
+                        $item[$i] = trim($row);
+                    }
                     if(is_numeric($item[1])){
                         $info = M('product')->where(['name'=>$item[1]])->find();
                         if(!$info){
@@ -223,7 +226,7 @@ class ProductController extends BaseController
                     if (empty($product)) {
                         $err .= $product . ",";
                     } else {
-                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>2]);
+                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>2,'client_id'=>$client_id,'client_name'=>$client['name']]);
                         $data = [
                             'type' => 2,
                             'product_id' => $product['id'],
@@ -299,6 +302,30 @@ class ProductController extends BaseController
      * 库存查询
      */
     public function search(){
+        // ALTER TABLE `t_product` ADD `client_id` INT( 11 ) NOT NULL DEFAULT '0' COMMENT '对应客户ID' AFTER `is_where` ;
+        // 工厂内
+        $product_list_1 = M('product')->where(['is_where'=>1])->group("cate_name")->field("*,count(*) as total")->select();
+
+        // 工厂外
+        $product_list_2 = M('product')->where(['is_where'=>2])->group("cate_name,client_id")->field("*,count(*) as total,concat(name,',') as total_name")->select();
+        foreach($product_list_2 as $i=>$item){
+            $product_list_2[$i]['total_name'] = trim($item['total_name'],',');
+        }
+        $this->assign('product_list_1', $product_list_1);
+        $this->assign('product_list_2', $product_list_2);
+
+        $this->display();
+    }
+
+    /**
+     * 库存明细
+     */
+    public function search_detail(){
+        $cate_name = I('cate_name','','trim');
+        $product_list = M('product')->where(['is_where'=>1, "cate_name"=>$cate_name])->field("*")->select();
+        //print_r($product_list);
+        $this->assign("product_list", $product_list);
+        $this->assign("cate_name", $cate_name);
         $this->display();
     }
 
