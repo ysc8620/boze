@@ -347,8 +347,6 @@ class ProductController extends BaseController
         }
     }
 
-
-
     /**
      * 库存明细
      */
@@ -361,5 +359,11 @@ class ProductController extends BaseController
         $this->display();
     }
 
+    /**
+     * 报警处理
+     */
+    public function warning(){
+        $this->display();
+    }
 
 }
