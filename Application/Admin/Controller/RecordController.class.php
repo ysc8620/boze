@@ -15,12 +15,16 @@ class RecordController extends BaseController
         $type = I('type', 0, 'intval');
         $batch = I('batch',0,'intval');
         $client = I('client',0,'intval');
-        $product = I('product',0,'intval');
+        $product = I('product','','trim');
+        $car = I('car','','trim');
+        $date = I('date','','trim');
 
+        $this->assign('car', $car);
         $this->assign('type', $type);
         $this->assign('batch_id', $batch);
         $this->assign('client', $client);
         $this->assign('product', $product);
+        $this->assign('date', $date);
 
         $model = M('product_record'); // 实例化User对象
         $where = [];
@@ -38,6 +42,14 @@ class RecordController extends BaseController
         // 客户
         if($client){
             $where['client_id'] = $client;
+        }
+
+        if($car){
+            $where['car'] = $car;
+        }
+
+        if($date){
+            $where['date'] = $date;
         }
 
         // 箱子编号

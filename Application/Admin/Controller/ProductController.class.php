@@ -237,6 +237,7 @@ class ProductController extends BaseController
                             'car_no' => $car_no,
                             'batch_no' => $batch_id,
                             'remark' => $remark,
+                            'date'=>date("Y-m-d"),
                             'create_time' => time()
                         ];
                         M('product_record')->add($data);
@@ -285,6 +286,7 @@ class ProductController extends BaseController
                             'car_no' => $car_no,
                             'batch_no' => $batch_id,
                             'remark' => $remark,
+                            'date'=>date("Y-m-d"),
                             'create_time' => time()
                         ];
                         M('product_record')->add($data);

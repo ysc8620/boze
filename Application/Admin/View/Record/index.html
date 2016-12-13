@@ -21,10 +21,40 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>发箱明细</h5>
+                    <h5>库存明细</h5>
+
+
+                </div>
                     <div class="ibox-content">
-                        <div class=""> <a href="{:U('product/import')}" target="_self" class="btn btn-primary ">铁箱导入</a> &nbsp; <a href="{:U('product/edit')}" target="_self" class="btn btn-primary ">铁箱添加</a> </div>
                         <div class="table-responsive">
+                            <div class="">
+                                <div class="input-group  col-sm-6 pull-right form-group">
+                                    <input type="hidden" name="batch" value="{$batch}" />
+                                    <input type="hidden" name="client" value="{$client}" />
+                                    <div class="col-sm-3">
+                                        <select class="form-control " name="type">
+                                            <option value="" selected="">所有状态</option>
+                                            <option value="1" <if condition="$type eq 1">selected</if>>收箱</option>
+                                            <option value="2" <if condition="$type eq 2">selected</if>>发箱</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" name="product" value="{$product}" placeholder="铁箱编号" type="text">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" name="car" value="{$car}" placeholder="车牌号码" type="text">
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <input class="form-control" name="date" value="{$date}" placeholder="操作日期" type="text">
+                                    </div>
+                                    <div class="input-group-btn">
+                                        <button type="submit" class="btn btn-sm btn-primary">
+                                            搜索
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
                             <table class="table table-striped table-bordered table-hover" id="editable">
                                 <thead>
                                 <tr>
