@@ -22,12 +22,11 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h5>库存明细</h5>
-
-
                 </div>
                     <div class="ibox-content">
+
                         <div class="table-responsive">
-                            <div class="">
+                            <div class="">  <div class=""> <a href="javascript:" class="btn btn-primary export">导出明细</a> </div>
                                 <div class="input-group  col-sm-6 pull-right form-group">
                                     <input type="hidden" name="batch" value="{$batch}" />
                                     <input type="hidden" name="client" value="{$client}" />
@@ -63,8 +62,8 @@
                                     <th>铁箱编号</th>
                                     <th>客户代码</th>
                                     <th>车牌号码</th>
-                                    <th>批次编号</th>
                                     <th>铁箱属性</th>
+                                    <th>批次编号</th>
                                     <th>记录时间</th>
                                     <th></th>
                                 </tr>
@@ -77,8 +76,8 @@
                                         <td><a href="{:tsurl('record/index',['name'=>$item[product_name]])}" title="查看同铁箱所有记录" >{$item.product_name}</a></td>
                                         <td><a href="{:tsurl('record/index',['name'=>$item[client_name]])}" title="查看同客户所有记录" >{$item.client_name}</a></td>
                                         <td><a href="{:tsurl('record/index',['car_no'=>$item[car_no]])}"  title="查看同车牌所有记录" >{$item.car_no}</a></td>
-                                        <td><a href="{:tsurl('record/index',['batch_id'=>$item[batch_no]])}" title="查看同批次所有记录" >{$item.batch_no}</a></td>
                                         <td>{$item.cate_name}</td>
+                                        <td><a href="{:tsurl('record/index',['batch_id'=>$item[batch_no]])}" title="查看同批次所有记录" >{$item.batch_no}</a></td>
                                         <td>{$item.create_time|date="Y-m-d H:i:s",###}</td>
                                         <td class="center">
                                         </td>
@@ -107,28 +106,31 @@
 <!-- 自定义js -->
 <script src="__PUBLIC__/admin/js/content.js?v=1.0.0"></script>
 <!-- Page-Level Scripts -->
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
-        /* Init DataTables */
-//            var oTable = $('#editable').dataTable();
-//
-//            /* Apply the jEditable handlers to the table */
-//            oTable.$('td').editable('../example_ajax.php', {
-//                "callback": function (sValue, y) {
-//                    var aPos = oTable.fnGetPosition(this);
-//                    oTable.fnUpdate(sValue, aPos[0], aPos[1]);
-//                },
-//                "submitdata": function (value, settings) {
-//                    return {
-//                        "row_id": this.parentNode.getAttribute('id'),
-//                        "column": oTable.fnGetPosition(this)[2]
-//                    };
-//                },
-//
-//                "width": "90%",
-//                "height": "100%"
-//            });
+        $('button[type="submit"]').click(function(){
+            var batch = $('input[name="batch"]').val();
+            var client = $('input[name="client"]').val();
+            var type = $('select[name="type"]').val();
+            var product = $('input[name="product"]').val();
+            var car = $('input[name="car"]').val();
+            var date = $('input[name="date"]').val();
+
+            window.location.href = "/index.php?s=/record/index.html&batch="+batch+"&client="+client+"&type="+type+"&product="+product+"&car="+car+"&date="+date;
+        });
+
+        $('.export').click(function(){
+            var batch = $('input[name="batch"]').val();
+            var client = $('input[name="client"]').val();
+            var type = $('select[name="type"]').val();
+            var product = $('input[name="product"]').val();
+            var car = $('input[name="car"]').val();
+            var date = $('input[name="date"]').val();
+
+            window.location.href = "/index.php?s=/record/index.html&batch="+batch+"&client="+client+"&type="+type+"&product="+product+"&car="+car+"&date="+date+"&export=1";
+        });
     });
+
 
 
 </script>

@@ -18,6 +18,7 @@ class RecordController extends BaseController
         $product = I('product','','trim');
         $car = I('car','','trim');
         $date = I('date','','trim');
+        $export = I('export',0,'intval');
 
         $this->assign('car', $car);
         $this->assign('type', $type);
@@ -62,7 +63,19 @@ class RecordController extends BaseController
 
         $show = $Page->show();// 分页显示输出
         // 进行分页数据查询 注意limit方法的参数要使用Page类的属性
-        $list = $model->where($where)->order('create_time')->order('id DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        if($export){
+            $list = $model->where($where)->order('create_time')->order('id DESC')->select();
+            // 出入库
+            $header = ["收发类型","箱子编号","客户代码","车牌号码","箱子属性","批次编号","记录时间"];
+            $data = [];
+            foreach($list as $item){
+                $data[] = [$item["type"] == 1?"收箱操作":"发箱操作",$item["product_name"],$item["client_name"],$item["car_no"],$item["cate_name"],$item["batch_no"],date("Y-m-d H:i",$item["create_time"])];
+            }
+            return $this->exportCsv($header, $data,date("Y-m-d-")."库存明细");
+        }else{
+            $list = $model->where($where)->order('create_time')->order('id DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+        }
+
         $this->assign('list', $list);// 赋值数据集
         $this->assign('page', $show);// 赋值分页输出
 

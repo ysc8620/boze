@@ -122,7 +122,7 @@ class ProductController extends BaseController
                     if(is_numeric($item[1])){
                         $info = M('product')->where(['name'=>$item[1]])->find();
                         if(!$info){
-                            M('product')->add(['name'=>$item[1], 'cate_name'=>$item[0], 'create_time'=>time()]);
+                            M('product')->add(['name'=>$item[1], 'cate_name'=>$item[0], 'create_time'=>time(),'update_time'=>time()]);
                         }
                     }
                 }
@@ -173,6 +173,7 @@ class ProductController extends BaseController
                     return $this->error("铁箱编号已经存在~");
                 }
                 $data['create_time'] = time();
+                $data['update_time'] = time();
                 $res = M('product')->add($data);
             }
             if($res){
@@ -226,7 +227,7 @@ class ProductController extends BaseController
                     if (empty($product)) {
                         $err .= $product . ",";
                     } else {
-                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>2,'client_id'=>$client_id,'client_name'=>$client['name']]);
+                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>2,'client_id'=>$client_id,'client_name'=>$client['name'],"update_time"=>time()]);
                         $data = [
                             'type' => 2,
                             'product_id' => $product['id'],
@@ -275,7 +276,7 @@ class ProductController extends BaseController
                     if (empty($product)) {
                         $err .= $product . ",";
                     } else {
-                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>1]);
+                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>1,"update_time"=>time()]);
                         $data = [
                             'type' => 1,
                             'product_id' => $product['id'],
@@ -318,6 +319,35 @@ class ProductController extends BaseController
 
         $this->display();
     }
+
+    /**
+     * ALTER TABLE `t_product` ADD `update_time` INT( 10 ) NOT NULL DEFAULT '0' AFTER `client_name` ;
+     */
+    public function export (){
+        $type = I('type',1,'intval');
+        // 工厂内
+        if($type == 1){
+            $product_list = M('product')->where(['is_where'=>1])->select();
+            $header = ["箱子属性","箱子编号","入库时间"];
+            $data = [];
+            foreach($product_list as $product){
+                $data[] = [$product['cate_name'],$product['name'],date("Y-m-d H:i", $product['update_time'])];
+            }
+            return $this->exportCsv($header, $data,date("Y-m-d-")."工厂内");
+        }
+
+        if($type == 2){
+            $product_list = M('product')->where(['is_where'=>2])->order("cate_name, client_id")->select();
+            $header = ["箱子属性","箱子编号","客户代码","出库时间"];
+            $data = [];
+            foreach($product_list as $product){
+                $data[] = [$product['cate_name'], $product['name'],$product['client_name'],date("Y-m-d H:i", $product['update_time'])];
+            }
+            return $this->exportCsv($header, $data,date("Y-m-d-")."工厂外");
+        }
+    }
+
+
 
     /**
      * 库存明细
