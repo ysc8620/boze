@@ -363,6 +363,40 @@ class ProductController extends BaseController
      * 报警处理
      */
     public function warning(){
+        $date = I('date',0,'intval');
+        $name = I('name',0,'intval');
+        $export = I('export',0,'intval');
+        if($date){
+            $time = time() - $date * 86400;
+            $date_list = M('product')->where("is_where=2 AND update_time<$time")->select();
+
+            if($export){
+                $header = ["箱子属性","箱子编号","客户代码","出库时间"];
+                $data = [];
+                foreach($date_list as $product){
+                    $data[] = [$product['cate_name'], $product['name'],$product['client_name'],date("Y-m-d H:i", $product['update_time'])];
+                }
+                return $this->exportCsv($header, $data,date("Y-m-d-")."工厂外");
+            }
+            $this->assign('date_list', $date_list);
+        }
+
+        if($name){
+            $detail_list = M('product')->where(["name"=>$name])->select();
+
+            $header = ["箱子属性","箱子位置","箱子编号","客户代码","操作时间"];
+            $data = [];
+            if($export){
+                foreach($detail_list as $product){
+                    $data[] = [$product['cate_name'],$product['is_where']==1?"在厂内":"在厂外", $product['name'],$product['client_name'],date("Y-m-d H:i", $product['update_time'])];
+                }
+                return $this->exportCsv($header, $data);
+            }
+            $this->assign('detail_list', $detail_list);
+        }
+
+        $this->assign('name',$name?$name:'');
+        $this->assign('date',$date?$date:'');
         $this->display();
     }
 
