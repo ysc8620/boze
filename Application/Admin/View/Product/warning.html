@@ -51,12 +51,12 @@
                                 <volist name="date_list" id="item">
                                     <tr class="gradeX">
                                         <td>{$item.id}</td>
-                                        <td><font color="blue"> 发箱操作</font></td>
                                         <td><a href="{:tsurl('record/index',['name'=>$item[product_name]])}" title="查看同铁箱所有记录" >{$item.name}</a></td>
                                         <td><a href="{:tsurl('record/index',['client'=>urlencode($item[client_name])])}" title="查看同客户所有记录" >{$item.client_name}</a></td>
                                         <td>{$item.cate_name}</td>
                                         <td>{$item.update_time|date="Y-m-d H:i:s",###}</td>
                                         <td class="center">
+                                            <a href="{:tsurl('product/edit_where',['id'=>$item[id]])}"  onclick="return confirm('你确认要修复错误吗？ 确认后箱子状态会改为在厂内~')">修复错误</a>
                                         </td>
                                     </tr>
                                 </volist>

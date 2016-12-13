@@ -376,21 +376,21 @@ class ProductController extends BaseController
                 foreach($date_list as $product){
                     $data[] = [$product['cate_name'], $product['name'],$product['client_name'],date("Y-m-d H:i", $product['update_time'])];
                 }
-                return $this->exportCsv($header, $data,date("Y-m-d-")."工厂外");
+                return $this->exportCsv($header, $data,date("Y-m-d-")."报警");
             }
             $this->assign('date_list', $date_list);
         }
 
         if($name){
-            $detail_list = M('product')->where(["name"=>$name])->select();
+            $detail_list = M('product')->where(["is_where"=>2, "name"=>$name])->select();
 
-            $header = ["箱子属性","箱子位置","箱子编号","客户代码","操作时间"];
+            $header = ["箱子属性","箱子编号","客户代码","操作时间"];
             $data = [];
             if($export){
                 foreach($detail_list as $product){
-                    $data[] = [$product['cate_name'],$product['is_where']==1?"在厂内":"在厂外", $product['name'],$product['client_name'],date("Y-m-d H:i", $product['update_time'])];
+                    $data[] = [$product['cate_name'],$product['name'],$product['client_name'],date("Y-m-d H:i", $product['update_time'])];
                 }
-                return $this->exportCsv($header, $data);
+                return $this->exportCsv($header, $data,date("Y-m-d-")."报警");
             }
             $this->assign('detail_list', $detail_list);
         }
@@ -398,6 +398,19 @@ class ProductController extends BaseController
         $this->assign('name',$name?$name:'');
         $this->assign('date',$date?$date:'');
         $this->display();
+    }
+
+    /**
+     *
+     */
+    public function edit_where()
+    {
+        $id = I("id",0,"intval");
+        if($id){
+            M("product")->where(["id"=>$id])->save(["is_where"=>1, "update_time"=>1]);
+        }
+        //echo"<script type='text/javascript'>history.go(-1);</script>";
+        return header("Location: ".$_SERVER["HTTP_REFERER"]?$_SERVER["HTTP_REFERER"]:tsurl("product/warning"));
     }
 
 }
