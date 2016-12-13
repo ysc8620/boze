@@ -28,23 +28,29 @@
                         <div class="table-responsive">
                             <div class="">  <div class=""> <a href="javascript:" class="btn btn-primary export">导出明细</a> </div>
                                 <div class="input-group  col-sm-6 pull-right form-group">
-                                    <input type="hidden" name="batch" value="{$batch}" />
-                                    <input type="hidden" name="client" value="{$client}" />
-                                    <div class="col-sm-3">
+
+                                    <div class="col-sm-2" style="padding-left: 5px; padding-right: 5px;">
                                         <select class="form-control " name="type">
                                             <option value="" selected="">所有状态</option>
                                             <option value="1" <if condition="$type eq 1">selected</if>>收箱</option>
                                             <option value="2" <if condition="$type eq 2">selected</if>>发箱</option>
                                         </select>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2" style="padding-left: 5px; padding-right: 5px;">
                                         <input class="form-control" name="product" value="{$product}" placeholder="铁箱编号" type="text">
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2" style="padding-left: 5px; padding-right: 5px;">
+                                        <input class="form-control" name="batch" value="{$batch}" placeholder="批次编号" type="text">
+                                    </div>
+                                    <div class="col-sm-2" style="padding-left: 5px; padding-right: 5px;">
+                                        <input class="form-control" name="client" value="{$client}" placeholder="客户代码" type="text">
+                                    </div>
+                                    <div class="col-sm-2" style="padding-left: 5px; padding-right: 5px;">
                                         <input class="form-control" name="car" value="{$car}" placeholder="车牌号码" type="text">
                                     </div>
-                                    <div class="col-sm-3">
-                                        <input class="form-control" name="date" value="{$date}" placeholder="操作日期" type="text">
+                                    <div class="col-sm-2" style="padding-left: 5px; padding-right: 5px;">
+
+                                        <input class="form-control" name="date" value="{$date}"  onclick="laydate({istime: true, format: 'YYYY-MM-DD'})" placeholder="操作日期" type="text">
                                     </div>
                                     <div class="input-group-btn">
                                         <button type="submit" class="btn btn-sm btn-primary">
@@ -74,10 +80,10 @@
                                         <td>{$item.id}</td>
                                         <td><if condition="$item.type eq 1"><font color="green" >收箱操作</font><else/><font color="blue"> 发箱操作</font></if></td>
                                         <td><a href="{:tsurl('record/index',['name'=>$item[product_name]])}" title="查看同铁箱所有记录" >{$item.product_name}</a></td>
-                                        <td><a href="{:tsurl('record/index',['name'=>$item[client_name]])}" title="查看同客户所有记录" >{$item.client_name}</a></td>
+                                        <td><a href="{:tsurl('record/index',['client'=>urlencode($item[client_name])])}" title="查看同客户所有记录" >{$item.client_name}</a></td>
                                         <td><a href="{:tsurl('record/index',['car_no'=>$item[car_no]])}"  title="查看同车牌所有记录" >{$item.car_no}</a></td>
                                         <td>{$item.cate_name}</td>
-                                        <td><a href="{:tsurl('record/index',['batch_id'=>$item[batch_no]])}" title="查看同批次所有记录" >{$item.batch_no}</a></td>
+                                        <td><a href="{:tsurl('record/index',['batch'=>$item[batch_no]])}" title="查看同批次所有记录" >{$item.batch_no}</a></td>
                                         <td>{$item.create_time|date="Y-m-d H:i:s",###}</td>
                                         <td class="center">
                                         </td>
@@ -99,10 +105,7 @@
 <!-- 全局js -->
 <script src="__PUBLIC__/admin/js/jquery.min.js?v=2.1.4"></script>
 <script src="__PUBLIC__/admin/js/bootstrap.min.js?v=3.3.5"></script>
-<script src="__PUBLIC__/admin/js/plugins/jeditable/jquery.jeditable.js"></script>
-<!-- Data Tables -->
-<script src="__PUBLIC__/admin/js/plugins/dataTables/jquery.dataTables.js"></script>
-<script src="__PUBLIC__/admin/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+<script src="__PUBLIC__/admin/js/plugins/layer/laydate/laydate.js"></script>
 <!-- 自定义js -->
 <script src="__PUBLIC__/admin/js/content.js?v=1.0.0"></script>
 <!-- Page-Level Scripts -->
