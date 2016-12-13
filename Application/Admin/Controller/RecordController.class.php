@@ -14,7 +14,7 @@ class RecordController extends BaseController
     {
         $type = I('type', 0, 'intval');
         $batch = I('batch',0,'intval');
-        $client = I('client','','trim');
+        $client = I('client','','trim,urldecode');
         $product = I('product','','trim');
         $car = I('car','','trim');
         $date = I('date','','trim');
