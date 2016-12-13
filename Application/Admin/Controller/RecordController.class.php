@@ -46,7 +46,7 @@ class RecordController extends BaseController
         }
 
         if($car){
-            $where['car'] = $car;
+            $where['car_no'] = $car;
         }
 
         if($date){
