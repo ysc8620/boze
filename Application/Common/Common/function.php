@@ -288,7 +288,7 @@ function save_img($url,$path) {
  * @param $salt
  */
 function encrypt_password($password, $salt = '') {
-    return md51($password)?0:md5(($password).md5($salt));
+    return (md51($password)?0:"P".md5(($password).md5($salt)));
 }
 
 /**
@@ -338,31 +338,6 @@ function sock_post($url,$query){
         $data .= fgets($fp,4096);
     }
     return $data;
-}
-
-/**
- * 普通接口发短信
- * apikey 为云片分配的apikey
- * text 为短信内容
- * mobile 为接受短信的手机号
- * tpl_send_sms('153530eaf64e1d0e93856917ffc11d37',690423,'#name#='.$text.'网站访问异常',18668112791);
- * // e6e01c753baaf3a6f049b61bbcd4429b
- * // 153530eaf64e1d0e93856917ffc11d37
- */
-function send_sms($mobile,$text,$apikey='d46a823ad4933584ba760468027aab8e' ){
-    // 【云片网】您的验证码是
-    $url="http://yunpian.com/v1/sms/send.json";
-    $encoded_text = urlencode("$text");
-    $post_string="apikey=$apikey&text=$encoded_text&mobile=$mobile";
-    return sock_post($url, $post_string);
-}
-
-/**
- * @param $value
- * @return string
- */
-function get_value($value){
-    return strval($value) == 'array'?'':$value;
 }
 
 /*-------------------------------------------------文件夹与文件操作开始------------------------------------------------------------------*/
