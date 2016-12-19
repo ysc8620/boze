@@ -91,13 +91,6 @@
     $(document).keyup(function(e){
         if(e.which == 37 || e.which == 38 || e.which == 39 || e.which == 40){
             $('textarea[name="product_no"]').focus();
-            var info = $.trim($('textarea[name="product_no"]').val());
-            if(info){
-                if(info.charAt(info.length - 1) != ','){
-                    $('textarea[name="product_no"]').val($('textarea[name="product_no"]').val()+',');
-                    $('textarea[name="product_no"]').focus();
-                }
-            }
         }
     });
 </script>

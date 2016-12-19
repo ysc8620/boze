@@ -215,7 +215,7 @@ class ProductController extends BaseController
             if(empty($car_no) || empty($client_id) || empty($product_no)){
                 return $this->error("请正确输入参数~");
             }
-            $product_list = explode(',', $product_no);
+            $product_list = explode("\r\n", $product_no);
             $err = "";
             if($product_list){
                 $client = M('client')->where(['id'=>$client_id])->find();
@@ -264,7 +264,7 @@ class ProductController extends BaseController
             if(empty($car_no) || empty($client_id) || empty($product_no)){
                 return $this->error("请正确输入参数~");
             }
-            $product_list = explode(',', $product_no);
+            $product_list = explode("\r\n", $product_no);
             $err = "";
             if($product_list){
                 $client = M('client')->where(['id'=>$client_id])->find();
