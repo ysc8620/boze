@@ -103,9 +103,6 @@ class ProductController extends BaseController
         header("Content-type: text/html; charset=utf-8");
         setlocale(LC_ALL, 'zh_CN');
         if(IS_POST){
-            if($_FILES['name']['type'] != 'text/csv'){
-                return $this->error("请正确上传CSV文件~", tsurl("product/import"));
-            }
             $file_path = $_FILES['name']['tmp_name'];
 
             if(file_exists($file_path)){
