@@ -193,6 +193,8 @@ class StockController extends BaseController {
      * 查询
      */
     public function search(){
+
+
         $ids = I('product_no','','trim');
         $ids = trim($ids,',');
         $ids = explode(',', $ids);
@@ -201,8 +203,6 @@ class StockController extends BaseController {
         $json['post'] = $_POST;
         $json['get'] = $_GET;
         $json['request'] = $_REQUEST;
-        $json['put'] = file_get_contents('php://input');
-        $json['test'] = $_SERVER;
         do{
             $ids2 = [];
             foreach($ids as $id){
