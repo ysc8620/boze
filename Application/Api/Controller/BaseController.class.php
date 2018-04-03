@@ -4,7 +4,7 @@ use Think\Controller;
 class BaseController extends Controller {
 
     public function _initialize(){
-        parse_str(file_get_contents('php://input'), $_POST);
+        //parse_str(file_get_contents('php://input'), $_POST);
     }
 
     /**
