@@ -208,6 +208,7 @@ class StockController extends BaseController {
             }
             if($ids2){
                 $list = M('product')->where(['name'=>['in', $ids]])->field('id,cate_name,name,remark,is_where,client_id,client_name')->select();
+                $json['sql'] = M()->getLastSql();
             }else{
                 $list = [];
             }
