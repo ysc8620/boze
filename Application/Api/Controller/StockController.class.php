@@ -201,8 +201,7 @@ class StockController extends BaseController {
         $json['post'] = $_POST;
         $json['get'] = $_GET;
         $json['request'] = $_REQUEST;
-        $json['put'] = I('put.product_no');
-
+        $json['put'] = file_get_contents('php://input');
         do{
             $ids2 = [];
             foreach($ids as $id){
