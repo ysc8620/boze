@@ -10,7 +10,7 @@ $config = array(
     'TMPL_STRIP_SPACE'     =>true,
     'OUTPUT_ENCODE'        =>true, // 页面压缩输出
 
-    'MODULE_ALLOW_LIST'    =>    array('Home','Admin'),
+    'MODULE_ALLOW_LIST'    =>    array('Home','Admin','Api'),
     'DEFAULT_MODULE'       =>    'Admin',  // 默认模块
 
     //加密混合值
