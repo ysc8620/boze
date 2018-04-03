@@ -193,7 +193,7 @@ class StockController extends BaseController {
      * 查询
      */
     public function search(){
-        $ids = I('ids','','trim');
+        $ids = I('product_no','','trim');
         $ids = trim($ids,',');
         $ids = explode(',', $ids);
 
