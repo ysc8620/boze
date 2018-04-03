@@ -207,7 +207,7 @@ class StockController extends BaseController {
                 }
             }
             if($ids2){
-                $list = M('product')->where(['id'=>['in', $ids]])->field('id,cate_name,name,remark,is_where,client_id,client_name')->select();
+                $list = M('product')->where(['name'=>['in', $ids]])->field('id,cate_name,name,remark,is_where,client_id,client_name')->select();
             }else{
                 $list = [];
             }
