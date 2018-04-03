@@ -30,6 +30,7 @@
                                 <tr>
                                     <th>铁箱属性</th>
                                     <th>铁箱编号</th>
+                                    <th>铁箱标签</th>
                                     <th>使用状态</th>
                                     <th>状态</th>
                                     <th>操作</th>
@@ -40,6 +41,7 @@
                                     <tr class="gradeX">
                                         <td>{$item.cate_name}</td>
                                         <td>{$item.name}</td>
+                                        <td>{$item.remark}</td>
                                         <td><if condition="$item.is_where eq 1"><font color="green">在库房</font> <else/><font color="red">在客户</font> </if></td>
                                         <td><if condition="$item.status eq 1"><font color="green">正常</font> <elseif condition="$item.status eq 2"/><font color="red">维修中</font><else/><font color="black">报废</font> </if></td>
                                         <td class="center">

@@ -116,10 +116,10 @@ class ProductController extends BaseController
                     foreach($item as $i=>$row){
                         $item[$i] = trim($row);
                     }
-                    if(is_numeric($item[1])){
+                    if(is_numeric($item[1]) && count($item) == 3){
                         $info = M('product')->where(['name'=>$item[1]])->find();
                         if(!$info){
-                            M('product')->add(['name'=>$item[1], 'cate_name'=>$item[0], 'create_time'=>time(),'update_time'=>time()]);
+                            M('product')->add(['name'=>"{$item[1]}", 'cate_name'=>"{$item[0]}",'remark'=>"{$item[2]}", 'create_time'=>time(),'update_time'=>time()]);
                         }
                     }
                 }
