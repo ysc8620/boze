@@ -198,6 +198,10 @@ class StockController extends BaseController {
         $ids = explode(',', $ids);
 
         $json = $this->simpleJson();
+        $json['post'] = $_POST;
+        $json['get'] = $_GET;
+        $json['request'] = $_REQUEST;
+        
         do{
             $ids2 = [];
             foreach($ids as $id){
