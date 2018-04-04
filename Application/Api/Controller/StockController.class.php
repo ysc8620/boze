@@ -411,4 +411,54 @@ class StockController extends BaseController {
         }while(false);
         $this->ajaxReturn($json);
     }
+
+    /**
+     * 按库房报警
+     */
+    public function alert_client(){
+        $client_id = I('client_id',0,'intval');
+        $date = I('date',0,'intval');
+        $limit = I('limit',10,'intval');
+
+        $json = $this->simpleJson();
+        $where = [];
+        do{
+            if(empty($date) || empty($client_id)){
+                $json['status'] = 201;
+                $json['msg'] = '参数设置错误';
+                break;
+            }
+            $where['status'] = 1;
+            if($client_id){
+                $where['client_id'] = $client_id;
+            }
+
+            $total = M('product')->where($where)->count();
+            $Page = new Page($total, $limit);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+
+            $show = $Page->show();// 分页显示输出
+            /**
+             *             "id": "2", #箱子编号
+            "cate_name": "P00367-000", #箱子属性
+            "name": "5265", # 箱子名称
+            "remark": "",#箱子标签
+            "is_where": "1",#箱子目前所在位置：1库房，2客户
+            "client_id": "0", #箱子所在库房编号
+            "client_name": ""#箱子所在库房名称
+            "update_time":"1563252021"#最近移动时间
+             *
+             */
+            $list = M('product')->where($where)->field('id,cate_name,name,remark,is_where,client_id,client_name,update_time')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+
+            $json['data'] = [
+                'page'=>$Page->nowPage,
+                'total'=>$total,
+                'total_page'=>$Page->totalPages,
+                'limit'=>$limit,
+                'list'=>$list
+
+            ];
+        }while(false);
+        $this->ajaxReturn($json);
+    }
 }
