@@ -240,4 +240,38 @@ class StockController extends BaseController {
 
         $this->ajaxReturn($json);
     }
+
+    /**
+     *
+     */
+    public function record(){
+        $client_id = I('client_id',0,'intval');
+        $type = I('type',0,'intval');
+        $name = I('name','','trim');
+        $from = I('from','','trim');
+        $to = I('to','','trim');
+
+        $json = $this->simpleJson();
+        $where = [];
+        do{
+            if($type){
+                $where['type'] = $type;
+            }
+
+            if($client_id){
+                $where['client_id'] = $client_id;
+            }
+
+            if($name){
+                $where['_string'] = "product_name='{$name}' OR product_remark='{$name}'";
+            }
+
+            if($from && $to){
+                $where['create_time'] = ['be'];
+            }
+
+
+        }while(false);
+        $this->ajaxReturn($json);
+    }
 }

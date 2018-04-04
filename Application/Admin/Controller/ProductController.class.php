@@ -49,11 +49,13 @@ class ProductController extends BaseController
             $name = I('post.name','','trim,htmlspecialchars');
             $remark = I('post.remark','','trim,htmlspecialchars');
             $status = I('post.status','1','intval');
+            $type = I('post.type',1,'intval');
             $id = I('post.id',0,'intval');
 
             $data['name'] = $name;
             $data['status'] = $status;
             $data['remark'] = $remark;
+            $data['type'] = $type;
             if($id){
                 $list = M('client')->where(['name'=>$name])->select();
                 foreach($list as $item){
