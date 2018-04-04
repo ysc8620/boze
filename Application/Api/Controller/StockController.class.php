@@ -1,6 +1,8 @@
 <?php
 namespace Api\Controller;
 use Think\Controller;
+use Think\Page;
+
 class StockController extends BaseController {
     /**
      * 入库操作
@@ -198,9 +200,7 @@ class StockController extends BaseController {
         $ids = explode(',', $ids);
 
         $json = $this->simpleJson();
-        $json['post'] = $_POST;
-        $json['get'] = $_GET;
-        $json['request'] = $_REQUEST;
+
         do{
             $ids2 = [];
             foreach($ids as $id){
@@ -211,7 +211,7 @@ class StockController extends BaseController {
             }
             if($ids2){
                 $list = M('product')->where(['name'=>['in', $ids]])->field('id,cate_name,name,remark,is_where,client_id,client_name')->select();
-                $json['sql'] = M()->getLastSql();
+
             }else{
                 $list = [];
             }
@@ -242,7 +242,7 @@ class StockController extends BaseController {
     }
 
     /**
-     *
+     * 搜索箱子的出入库时间
      */
     public function record(){
         $client_id = I('client_id',0,'intval');
@@ -250,6 +250,7 @@ class StockController extends BaseController {
         $name = I('name','','trim');
         $from = I('from','','trim');
         $to = I('to','','trim');
+        $limit = I('limit',10,'intval');
 
         $json = $this->simpleJson();
         $where = [];
@@ -267,10 +268,73 @@ class StockController extends BaseController {
             }
 
             if($from && $to){
-                $where['create_time'] = ['be'];
+                $where['create_time'] = ['between',[strtotime($from), strtotime($to)]];
+            }elseif($from){
+                $where['create_time'] = ['gt', strtotime($from)];
+            }elseif($to){
+                $where['create_time'] = ['elt', strtotime($to)];
             }
 
+            $total = M('product_record')->where($where)->count();
+            $Page = new Page($total, $limit);// 实例化分页类 传入总记录数和每页显示的记录数(25)
 
+            $show = $Page->show();// 分页显示输出
+            // `id`, `type`, `product_id`, `product_name`, `product_remark`, `cate_name`, `from_id`, `from_name`, `client_id`, `client_name`, `car_no`, `batch_no`, `remark`, `date`, `create_time`
+            $list = M('product_record')->where($where)->limit($Page->firstRow . ',' . $Page->listRows)->field('id,type,product_id,product_name as name,
+             product_remark as remark,create_time as time, from_id as from_client_id, from_name as from_client_name, client_id as to_client_id, client_name as to_client_name')->select();
+
+            $json['data'] = [
+                'page'=>$Page->nowPage,
+                'total'=>$total,
+                'total_page'=>$Page->totalPages,
+                'limit'=>$limit,
+                'list'=>$list
+
+            ];
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
+    /**
+     * 库存统计
+     */
+    public function statistics(){
+        $type = I('type',0,'intval');
+        $limit = I('limit',10,'intval');
+
+        $json = $this->simpleJson();
+        $where = [];
+        do{
+            $where['status'] = 1;
+            if($type){
+                $where['type'] = $type;
+            }
+
+            $total = M('client')->where($where)->count();
+            $Page = new Page($total, $limit);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+
+            $show = $Page->show();// 分页显示输出
+            /**
+             *         "client_id":0,
+            "client_name":"仓库1",
+            "H":20,
+            "L":10,
+            "total":30
+             */
+            $list = M('client')->where($where)->limit($Page->firstRow . ',' . $Page->listRows)->field('id as client_id, type as client_type, name as client_name')->select();
+            foreach($list as $i=>$item){
+                $list[$i]['total'] = M('product')->where(['client_id'=>$item['client_id']])->count();
+                $list[$i]['H'] = M('product')->where(['client_id'=>$item['client_id'],'cate_name'=>'P00367-000'])->count();
+                $list[$i]['L'] = M('product')->where(['client_id'=>$item['client_id'],'cate_name'=>'P00367-002'])->count();
+            }
+            $json['data'] = [
+                'page'=>$Page->nowPage,
+                'total'=>$total,
+                'total_page'=>$Page->totalPages,
+                'limit'=>$limit,
+                'list'=>$list
+
+            ];
         }while(false);
         $this->ajaxReturn($json);
     }
