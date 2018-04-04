@@ -412,4 +412,5 @@ class ProductController extends BaseController
         return header("Location: ".$_SERVER["HTTP_REFERER"]?$_SERVER["HTTP_REFERER"]:tsurl("product/warning"));
     }
 
+
 }

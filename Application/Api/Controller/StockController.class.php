@@ -467,4 +467,28 @@ class StockController extends BaseController {
         }while(false);
         $this->ajaxReturn($json);
     }
+
+    /**
+     * 统计
+     */
+    public function total(){
+        $json = $this->simpleJson();
+        do{
+            $data = [
+                'total_in'=>100,
+                'total_in_h'=>45,
+                'total_in_l'=>55,
+
+                'total_out'=>168,
+                'total_out_h'=> 120,
+                'total_out_l'=>48,
+
+                'today_in'=>60,
+                'today_out'=>30,
+                'today_move'=>28
+            ];
+            $json['data'] = $data;
+        }while(false);
+        $this->ajaxReturn($json);
+    }
 }
