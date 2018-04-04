@@ -365,7 +365,7 @@ class StockController extends BaseController {
             "L":10,
             "total":30
              */
-            $list = M('product')->where($where)->limit($Page->firstRow . ',' . $Page->listRows)->field('id, cate_name, name, remark')->select();
+            $list = M('product')->where($where)->limit($Page->firstRow . ',' . $Page->listRows)->field('id, cate_name, name, remark,client_id,client_name')->select();
 
             $json['data'] = [
                 'page'=>$Page->nowPage,
