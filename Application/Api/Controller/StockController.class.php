@@ -39,12 +39,14 @@ class StockController extends BaseController {
                         $err[] = $product;
                     } else {
                         $succ[] = $product;
-                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>1,"update_time"=>time(),'client_id'=>$client_id,'client_name'=>$client['name']]);
+                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>1,"update_time"=>time(),'from_id'=>$product['client_id'],'from_name'=>$product['client_name'], 'client_id'=>$client_id,'client_name'=>$client['name']]);
                         $data = [
                             'type' => 1,
                             'product_id' => $product['id'],
                             'product_name' => $product['name'],
                             'cate_name' => $product['cate_name'],
+                            'from_id'=>$product['client_id'],
+                            'from_name'=>$product['client_name'],
                             'client_id' => $client_id,
                             'client_name' => $client['name'],
                             'car_no' => $car_no,
@@ -99,12 +101,14 @@ class StockController extends BaseController {
                         $err[] = $product;
                     } else {
                         $succ[] = $product;
-                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>2,"update_time"=>time(),'client_id'=>$client_id,'client_name'=>$client['name']]);
+                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>2,"update_time"=>time(),'from_id'=>$product['client_id'],'from_name'=>$product['client_name'],'client_id'=>$client_id,'client_name'=>$client['name']]);
                         $data = [
                             'type' => 2,
                             'product_id' => $product['id'],
                             'product_name' => $product['name'],
                             'cate_name' => $product['cate_name'],
+                            'from_id'=>$product['client_id'],
+                            'from_name'=>$product['client_name'],
                             'client_id' => $client_id,
                             'client_name' => $client['name'],
                             'car_no' => $car_no,
@@ -167,12 +171,14 @@ class StockController extends BaseController {
                         $err[] = $product;
                     } else {
                         $succ[] = $product;
-                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>$client2['type'],"update_time"=>time(),'client_id'=>$client_id2,'client_name'=>$client2['name']]);
+                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>$client2['type'],"update_time"=>time(),'from_id'=>$client_id,'from_name'=>$client['name'], 'client_id'=>$client_id2,'client_name'=>$client2['name']]);
                         $data = [
                             'type' => 3,
                             'product_id' => $product['id'],
                             'product_name' => $product['name'],
                             'cate_name' => $product['cate_name'],
+                            'from_id'=>$client_id,
+                            'from_name'=>$client['name'],
                             'client_id' => $client_id2,
                             'client_name' => $client2['name'],
                             'car_no' => $car_no,
