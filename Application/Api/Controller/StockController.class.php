@@ -165,7 +165,7 @@ class StockController extends BaseController {
                         $err[] = $product;
                     } else {
                         $succ[] = $product;
-                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>1,"update_time"=>time(),'client_id'=>$client_id2,'client_name'=>$client2['name']]);
+                        M('product')->where(['id'=>$product['id']])->save(['is_where'=>$client2['type'],"update_time"=>time(),'client_id'=>$client_id2,'client_name'=>$client2['name']]);
                         $data = [
                             'type' => 3,
                             'product_id' => $product['id'],
@@ -228,8 +228,15 @@ class StockController extends BaseController {
      */
     public function client_list(){
         $json = $this->simpleJson();
+        $type = I('type',0,'intval');
         do{
-            $list = M('client')->where(['status'=>1])->field('id,name,remark')->select();
+            $where = [
+                'status'=>1
+            ];
+            if($type){
+                $where['type'] = $type;
+            }
+            $list = M('client')->where($where)->field('id,name,type,remark')->select();
             $json['data'] = $list;
         }while(false);
 
