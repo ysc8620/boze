@@ -13,13 +13,13 @@ class StockController extends BaseController {
             $product_no = I('product_no','','trim,htmlspecialchars');
             $remark = I('remark','','trim,htmlspecialchars');
             if(empty($client_id) || empty($product_no)){
-                $json['state'] = 201;
+                $json['status'] = 201;
                 $json['msg'] = '请正确设置参数';
                 break;
             }
             $client = M('client')->where(['id'=>$client_id])->find();
             if(empty($client)){
-                $json['state'] = 201;
+                $json['status'] = 201;
                 $json['msg'] = '请正确选择库房';
                 break;
             }
@@ -72,14 +72,14 @@ class StockController extends BaseController {
             $product_no = I('product_no','','trim,htmlspecialchars');
             $remark = I('remark','','trim,htmlspecialchars');
             if(empty($client_id) || empty($product_no)){
-                $json['state'] = 201;
+                $json['status'] = 201;
                 $json['msg'] = '请正确设置参数';
                 break;
             }
 
             $client = M('client')->where(['id'=>$client_id])->find();
             if(empty($client)){
-                $json['state'] = 201;
+                $json['status'] = 201;
                 $json['msg'] = '请正确选择库房';
                 break;
             }
@@ -133,21 +133,21 @@ class StockController extends BaseController {
             $product_no = I('product_no','','trim,htmlspecialchars');
             $remark = I('remark','','trim,htmlspecialchars');
             if( empty($client_id) || empty($product_no)){
-                $json['state'] = 201;
+                $json['status'] = 201;
                 $json['msg'] = '请正确设置参数';
                 break;
             }
 
             $client = M('client')->where(['id'=>$client_id])->find();
             if(empty($client)){
-                $json['state'] = 201;
+                $json['status'] = 201;
                 $json['msg'] = '请正确选择来自库房';
                 break;
             }
 
             $client2 = M('client')->where(['id'=>$client_id2])->find();
             if(empty($client2)){
-                $json['state'] = 201;
+                $json['status'] = 201;
                 $json['msg'] = '请正确选择移动库房';
                 break;
             }
