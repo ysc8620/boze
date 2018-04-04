@@ -338,4 +338,44 @@ class StockController extends BaseController {
         }while(false);
         $this->ajaxReturn($json);
     }
+
+    /**
+     * 库房详情
+     */
+    public function product(){
+        $client_id = I('client_id',0,'intval');
+        $limit = I('limit',10,'intval');
+
+        $json = $this->simpleJson();
+        $where = [];
+        do{
+            $where['status'] = 1;
+            if($client_id){
+                $where['client_id'] = $client_id;
+            }
+
+            $total = M('product')->where($where)->count();
+            $Page = new Page($total, $limit);// 实例化分页类 传入总记录数和每页显示的记录数(25)
+
+            $show = $Page->show();// 分页显示输出
+            /**
+             *         "client_id":0,
+            "client_name":"仓库1",
+            "H":20,
+            "L":10,
+            "total":30
+             */
+            $list = M('product')->where($where)->limit($Page->firstRow . ',' . $Page->listRows)->field('id, cate_name, name, remark')->select();
+
+            $json['data'] = [
+                'page'=>$Page->nowPage,
+                'total'=>$total,
+                'total_page'=>$Page->totalPages,
+                'limit'=>$limit,
+                'list'=>$list
+
+            ];
+        }while(false);
+        $this->ajaxReturn($json);
+    }
 }
