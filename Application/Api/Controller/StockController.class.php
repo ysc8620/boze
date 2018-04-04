@@ -287,7 +287,7 @@ class StockController extends BaseController {
             $show = $Page->show();// 分页显示输出
             // `id`, `type`, `product_id`, `product_name`, `product_remark`, `cate_name`, `from_id`, `from_name`, `client_id`, `client_name`, `car_no`, `batch_no`, `remark`, `date`, `create_time`
             $list = M('product_record')->where($where)->limit($Page->firstRow . ',' . $Page->listRows)->field('id,type,product_id,product_name as name,
-             product_remark as remark,create_time as time, from_id as from_client_id, from_name as from_client_name, client_id as to_client_id, client_name as to_client_name')->select();
+             product_remark as remark,create_time as time, from_id as from_client_id, from_name as from_client_name, client_id as to_client_id, client_name as to_client_name')->order('create_time DESC')->select();
 
             $json['data'] = [
                 'page'=>$Page->nowPage,
@@ -364,7 +364,7 @@ class StockController extends BaseController {
             $Page = new Page($total, $limit);// 实例化分页类 传入总记录数和每页显示的记录数(25)
 
             $show = $Page->show();// 分页显示输出
-            $list = M('product')->where($where)->limit($Page->firstRow . ',' . $Page->listRows)->field('id, cate_name, name, remark,client_id,client_name')->select();
+            $list = M('product')->where($where)->limit($Page->firstRow . ',' . $Page->listRows)->field('id, cate_name, name, remark,client_id,client_name')->order('id DESC')->select();
 
             $json['data'] = [
                 'page'=>$Page->nowPage,
@@ -454,7 +454,7 @@ class StockController extends BaseController {
             "update_time":"1563252021"#最近移动时间
              *
              */
-            $list = M('product')->where($where)->field('id,cate_name,name,remark,is_where,client_id,client_name,update_time')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+            $list = M('product')->where($where)->field('id,cate_name,name,remark,is_where,client_id,client_name,update_time')->order('update_time DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
 
             $json['data'] = [
                 'page'=>$Page->nowPage,
