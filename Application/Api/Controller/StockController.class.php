@@ -12,7 +12,7 @@ class StockController extends BaseController {
             $client_id = I('client_id','','trim,htmlspecialchars');
             $product_no = I('product_no','','trim,htmlspecialchars');
             $remark = I('remark','','trim,htmlspecialchars');
-            if(empty($car_no) || empty($client_id) || empty($product_no)){
+            if(empty($client_id) || empty($product_no)){
                 $json['state'] = 201;
                 $json['msg'] = '请正确设置参数';
                 break;
@@ -71,7 +71,7 @@ class StockController extends BaseController {
             $client_id = I('client_id','','trim,htmlspecialchars');
             $product_no = I('product_no','','trim,htmlspecialchars');
             $remark = I('remark','','trim,htmlspecialchars');
-            if(empty($car_no) || empty($client_id) || empty($product_no)){
+            if(empty($client_id) || empty($product_no)){
                 $json['state'] = 201;
                 $json['msg'] = '请正确设置参数';
                 break;
@@ -132,7 +132,7 @@ class StockController extends BaseController {
             $client_id2 = I('client_id2','','trim,htmlspecialchars');
             $product_no = I('product_no','','trim,htmlspecialchars');
             $remark = I('remark','','trim,htmlspecialchars');
-            if(empty($car_no) || empty($client_id) || empty($product_no)){
+            if( empty($client_id) || empty($product_no)){
                 $json['state'] = 201;
                 $json['msg'] = '请正确设置参数';
                 break;
@@ -193,8 +193,6 @@ class StockController extends BaseController {
      * 查询
      */
     public function search(){
-
-
         $ids = I('product_no','','trim');
         $ids = trim($ids,',');
         $ids = explode(',', $ids);
