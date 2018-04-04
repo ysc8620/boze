@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>客户编辑</title>
-    <meta name="keywords" content="客户编辑">
-    <meta name="description" content="客户编辑">
+    <title>库房编辑</title>
+    <meta name="keywords" content="库房编辑">
+    <meta name="description" content="库房编辑">
     <link rel="shortcut icon" href="favicon.ico">
     <link href="__PUBLIC__/admin/css/bootstrap.min.css?v=3.3.5" rel="stylesheet">
     <link href="__PUBLIC__/admin/css/font-awesome.css?v=4.4.0" rel="stylesheet">
@@ -23,7 +23,7 @@
             <div class="ibox float-e-margins">
                 <div class=""> <a href="{:U('product/client')}" target="_self" class="btn btn-primary ">返回列表</a></div>
                 <div class="ibox-title">
-                    <h5><a href="{:U('product/client')}"> 客户列表</a> > <small>客户编辑</small></h5>
+                    <h5><a href="{:U('product/client')}"> 库房列表</a> > <small>库房编辑</small></h5>
                     <div class="ibox-tools">
                         <a class="collapse-link"> <i class="fa fa-chevron-up"></i> </a>
                     </div>
@@ -32,15 +32,15 @@
                     <form method="post" name="edit" target="_self" action="{:U('product/client_edit')}" class="form-horizontal">
                         <input type="hidden" name="id" value="{$detail.id}" />
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">客户编号：</label>
+                            <label class="col-sm-2 control-label">库房名称：</label>
                             <div class="col-sm-10">
                                 <input type="text" name="name" value="{$detail.name}" class="form-control">
-                                <label><font color="red">*客户编号</font></label>
+                                <label><font color="red">*库房名称</font></label>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">客户备注：</label>
+                            <label class="col-sm-2 control-label">库房备注：</label>
                             <div class="col-sm-10">
                                 <input type="text" name="remark" value="{$detail.remark}" class="form-control">
                                 <label><font color="red">*备注信息</font></label>
@@ -48,7 +48,17 @@
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">客户状态：</label>
+                            <label class="col-sm-2 control-label">库房类型：</label>
+                            <div class="col-sm-10">
+                                <select name="type" class="form-control">
+                                    <option value="1" <if condition='$detail.type eq 1'>selected</if>>工厂内</option>
+                                    <option value="2" <if condition="$detail.type eq '2'">selected</if>>工厂外</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">库房状态：</label>
                             <div class="col-sm-10">
                                 <select name="status" class="form-control">
                                     <option value="1" <if condition='$detail.status eq 1'>selected</if>>正常</option>
