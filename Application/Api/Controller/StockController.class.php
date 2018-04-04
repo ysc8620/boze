@@ -358,13 +358,6 @@ class StockController extends BaseController {
             $Page = new Page($total, $limit);// 实例化分页类 传入总记录数和每页显示的记录数(25)
 
             $show = $Page->show();// 分页显示输出
-            /**
-             *         "client_id":0,
-            "client_name":"仓库1",
-            "H":20,
-            "L":10,
-            "total":30
-             */
             $list = M('product')->where($where)->limit($Page->firstRow . ',' . $Page->listRows)->field('id, cate_name, name, remark,client_id,client_name')->select();
 
             $json['data'] = [
@@ -375,6 +368,46 @@ class StockController extends BaseController {
                 'list'=>$list
 
             ];
+        }while(false);
+        $this->ajaxReturn($json);
+    }
+
+    /**
+     *
+     */
+    public function alert(){
+        $type = I('type',0,'intval');
+        $date = I('date',0,'intval');
+
+        $json = $this->simpleJson();
+        $where = [];
+        do{
+            if(empty($date)){
+                $json['status'] = 201;
+                $json['msg'] = '参数设置错误';
+                break;
+            }
+            $where['status'] = 1;
+            if($type){
+                $where['type'] = $type;
+            }
+
+            /**
+             *         "client_id":"1",#仓库编号
+            "client_name":"仓库名",#仓库名称
+            "H":"12",#H数量
+            "L":"8",#L数量
+            "total":"20"#总数
+             *
+             */
+            $list= M('client')->where($where)->field('id as client_id, name as client_name')->select();
+            foreach($list as $i=>$item){
+                $list[$i]['total'] = M('product')->where(['update_time'=>['lt', time()- $date*86400]])->count();
+                $list[$i]['H'] = M('product')->where(['cate_name'=>'P00367-000', 'update_time'=>['lt', time()- $date*86400]])->count();
+                $list[$i]['L'] = M('product')->where(['cate_name'=>'P00367-002', 'update_time'=>['lt', time()- $date*86400]])->count();
+            }
+
+            $json['data'] = $list;
         }while(false);
         $this->ajaxReturn($json);
     }
