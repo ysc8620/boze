@@ -471,7 +471,7 @@ class StockController extends BaseController {
     /**
      * 统计
      */
-    public function total(){
+    public function total2(){
         $json = $this->simpleJson();
         do{
             $data = [
