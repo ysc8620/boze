@@ -19,12 +19,6 @@ class LoginController extends Controller {
             return $this->error('登陆失败',U('login/index'));
         }
 
-        $password = encrypt_password($pass, $user['salt']);
-
-        if($password != $user['pwd']){
-            return $this->error('登陆失败',U('login/index'));
-        }
-
         M('admin')->where(array('id'=>$user['id']))->save(array('last_login_time'=>time()));
         session('is_login', 1);
         session('login_user_id',$user['id']);

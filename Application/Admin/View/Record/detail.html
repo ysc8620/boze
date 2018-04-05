@@ -21,7 +21,7 @@
         <div class="col-sm-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>库存明细</h5>
+                    <h5>箱子收发详情</h5>
                     <div class="ibox-content">
                         <!--<div class=""> <a href="{:U('product/import')}" target="_self" class="btn btn-primary ">铁箱导入</a> &nbsp; <a href="{:U('product/edit')}" target="_self" class="btn btn-primary ">铁箱添加</a> </div>-->
                         <div class="table-responsive">
@@ -30,24 +30,21 @@
                                 <tr>
                                     <th>铁箱属性</th>
                                     <th>铁箱编号</th>
-                                    <th>使用状态</th>
-                                    <th>车牌号码</th>
+                                    <th>操作类型</th>
+                                    <th>来自库</th>
+                                    <th>发到库</th>
                                     <th>操作时间</th>
-                                    <th>操作批次</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <volist name="list" id="item">
                                     <tr class="gradeX">
                                         <td>{$item.cate_name}</td>
-                                        <td>{$item.name}</td>
-                                        <td><if condition="$item.is_where eq 1"><font color="green">在库房</font> <else/><font color="red">在客户</font> </if></td>
-                                        <td><if condition="$item.status eq 1"><font color="green">正常</font> <elseif condition="$item.status eq 2"/><font color="red">维修中</font><else/><font color="black">报废</font> </if></td>
-                                        <td class="center">
-                                            <a href="{:U('record/detail', ['proid' => $item['id']])}"><i class="fa fa-check text-navy"></i>收发记录</a>
-                                            <a href="{:U('product/edit', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>编辑</a>
-                                            <a href="{:U('product/del', ['id' => $item['id']])}"><i class="fa fa-check text-navy"></i>删除</a>
-                                        </td>
+                                        <td>{$item.product_name}</td>
+                                        <td><if condition="$item[type] eq 1"><font color="green">收箱子</font> <elseif condition="$item[type] eq 2"/><font color="red">发箱子</font><elseif condition="$item[type] eq 3">移箱子</if></td>
+                                        <td>{$from_name|default='-'}</td>
+                                        <td>{$client_name|default='-'}</td>
+                                        <td>{:date("Y-m-d H:i", $item[create_time])}</td>
                                     </tr>
                                 </volist>
                                 </tbody>

@@ -408,9 +408,9 @@ class StockController extends BaseController {
              */
             $list= M('client')->where($where)->field('id as client_id, name as client_name')->select();
             foreach($list as $i=>$item){
-                $list[$i]['total'] = M('product')->where(['update_time'=>['lt', time()- $date*86400]])->count();
-                $list[$i]['H'] = M('product')->where(['cate_name'=>'P00367-000', 'update_time'=>['lt', time()- $date*86400]])->count();
-                $list[$i]['L'] = M('product')->where(['cate_name'=>'P00367-002', 'update_time'=>['lt', time()- $date*86400]])->count();
+                $list[$i]['total'] = M('product')->where(['client_id'=>$item['client_id'],'update_time'=>['lt', time()- $date*86400]])->count();
+                $list[$i]['H'] = M('product')->where(['client_id'=>$item['client_id'],'cate_name'=>'P00367-000', 'update_time'=>['lt', time()- $date*86400]])->count();
+                $list[$i]['L'] = M('product')->where(['client_id'=>$item['client_id'],'cate_name'=>'P00367-002', 'update_time'=>['lt', time()- $date*86400]])->count();
             }
 
             $json['data'] = $list;
@@ -454,7 +454,7 @@ class StockController extends BaseController {
             "update_time":"1563252021"#最近移动时间
              *
              */
-            $list = M('product')->where($where)->field('id,cate_name,name,remark,is_where,client_id,client_name,update_time')->order('update_time DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
+            $list = M('product')->where($where)->field('id,cate_name,name,remark,is_where,from_id, from_name,client_id,client_name,update_time')->order('update_time DESC')->limit($Page->firstRow . ',' . $Page->listRows)->select();
 
             $json['data'] = [
                 'page'=>$Page->nowPage,
