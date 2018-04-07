@@ -41,7 +41,7 @@
                                     <tr class="gradeX">
                                         <td>{$item.cate_name}</td>
                                         <td>{$item.product_name}</td>
-                                        <td><if condition="$item[type] eq 1"><font color="green">收箱子</font> <elseif condition="$item[type] eq 2"/><font color="red">发箱子</font><elseif condition="$item[type] eq 3">移箱子</if></td>
+                                        <td><if condition="$item[type] eq 1"><font color="green">收箱子</font> <elseif condition="$item[type] eq 2"/><font color="red">发箱子</font><elseif condition="$item[type] eq 3"/>移箱子</if></td>
                                         <td>{$from_name|default='-'}</td>
                                         <td>{$client_name|default='-'}</td>
                                         <td>{:date("Y-m-d H:i", $item[create_time])}</td>
