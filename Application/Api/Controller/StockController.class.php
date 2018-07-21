@@ -34,7 +34,7 @@ class StockController extends BaseController {
                 foreach($product_list as $item) {
                     $item = trim($item);
                     if (empty($item)) continue;
-                    $product = M('product')->where(['name' => $item])->find();
+                    $product = M('product')->where("FIND_IN_SET(name,'{$item}')")->find();
                     if (empty($product)) {
                         $err[] = $product;
                     } else {
@@ -96,7 +96,7 @@ class StockController extends BaseController {
                 foreach($product_list as $item) {
                     $item = trim($item);
                     if (empty($item)) continue;
-                    $product = M('product')->where(['name' => $item])->find();
+                    $product = M('product')->where("FIND_IN_SET(name,'{$item}')")->find();
                     if (empty($product)) {
                         $err[] = $product;
                     } else {
@@ -166,7 +166,7 @@ class StockController extends BaseController {
                 foreach($product_list as $item) {
                     $item = trim($item);
                     if (empty($item)) continue;
-                    $product = M('product')->where(['name' => $item])->find();
+                    $product = M('product')->where("FIND_IN_SET(name,'{$item}')")->find();
                     if (empty($product)) {
                         $err[] = $product;
                     } else {
@@ -208,19 +208,17 @@ class StockController extends BaseController {
         $json = $this->simpleJson();
 
         do{
-            $ids2 = [];
+            $list = [];
             foreach($ids as $id){
                 $id = intval($id);
                 if($id){
-                    $ids2[] = $id;
+                    $product = M('product')->where("FIND_IN_SET(name,'{$id}')")->find();
+                    if($product){
+                        $list[$product['id']] = $product;
+                    }
                 }
             }
-            if($ids2){
-                $list = M('product')->where(['name'=>['in', $ids]])->field('id,cate_name,name,remark,is_where,client_id,client_name')->select();
 
-            }else{
-                $list = [];
-            }
             $json['data'] = $list;
 
         }while(false);
@@ -270,7 +268,7 @@ class StockController extends BaseController {
             }
 
             if($name){
-                $where['_string'] = "product_name='{$name}' OR product_remark='{$name}'";
+                $where['_string'] = "FIND_IN_SET(product_name,'{$name}') OR FIND_IN_SET(product_remark,'{$name}')";
             }
 
             if($from && $to){
