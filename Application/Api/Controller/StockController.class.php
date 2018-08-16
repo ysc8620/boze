@@ -210,7 +210,7 @@ class StockController extends BaseController {
         do{
             $list = [];
             foreach($ids as $id){
-                $id = intval($id);
+                $id = trim($id);
                 if($id){
                     $product = M('product')->where("FIND_IN_SET('{$id}',name)")->find();
                     if($product){
