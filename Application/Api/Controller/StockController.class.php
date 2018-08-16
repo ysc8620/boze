@@ -34,7 +34,7 @@ class StockController extends BaseController {
                 foreach($product_list as $item) {
                     $item = trim($item);
                     if (empty($item)) continue;
-                    $product = M('product')->where("FIND_IN_SET(name,'{$item}')")->find();
+                    $product = M('product')->where("FIND_IN_SET('{$item}',name)")->find();
                     if (empty($product)) {
                         $err[] = $product;
                     } else {
@@ -96,7 +96,7 @@ class StockController extends BaseController {
                 foreach($product_list as $item) {
                     $item = trim($item);
                     if (empty($item)) continue;
-                    $product = M('product')->where("FIND_IN_SET(name,'{$item}')")->find();
+                    $product = M('product')->where("FIND_IN_SET('{$item}',name)")->find();
                     if (empty($product)) {
                         $err[] = $product;
                     } else {
@@ -166,7 +166,7 @@ class StockController extends BaseController {
                 foreach($product_list as $item) {
                     $item = trim($item);
                     if (empty($item)) continue;
-                    $product = M('product')->where("FIND_IN_SET(name,'{$item}')")->find();
+                    $product = M('product')->where("FIND_IN_SET('{$item}',name)")->find();
                     if (empty($product)) {
                         $err[] = $product;
                     } else {
@@ -212,7 +212,7 @@ class StockController extends BaseController {
             foreach($ids as $id){
                 $id = intval($id);
                 if($id){
-                    $product = M('product')->where("FIND_IN_SET(name,'{$id}')")->find();
+                    $product = M('product')->where("FIND_IN_SET('{$id}',name)")->find();
                     if($product){
                         $list[$product['id']] = $product;
                     }
@@ -268,7 +268,7 @@ class StockController extends BaseController {
             }
 
             if($name){
-                $where['_string'] = "FIND_IN_SET(product_name,'{$name}') OR FIND_IN_SET(product_remark,'{$name}')";
+                $where['_string'] = "FIND_IN_SET('{$name}',product_name) OR FIND_IN_SET('{$name}',product_remark)";
             }
 
             if($from && $to){
